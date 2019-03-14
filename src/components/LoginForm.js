@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import {Text} from 'react-native';
-import firebase from 'firebase';
+import {Text, View} from 'react-native';
+// import firebase from 'firebase';
 import { emailChanged, passwordChanged, loginUser } from '../actions'; 
 import { Button, Card, CardSection, Input, Spinner} from './common';
 
@@ -34,14 +34,26 @@ class LoginForm extends Component {
     this.props.passwordChanged(text);
   }
 
+  renderError() {
+    console.log(this.props);
+    if(this.props.error){
+      return(
+        <View style={{ backgroundColor: 'white'}}>
+        <Text style={styles.errorTextStyle}>
+        {this.props.error}
+        </Text>
+        </View>
+      );
+    }
+  }
+
   renderButton() {
-    if(this.state.loading) {
+    if(this.props.loading) {
       return <Spinner size="small" />;
     }
-//onPress={this.onButtonPress.bind(this)}
     return (
         <Button onPress={this.onButtonPress.bind(this)}>
-          Log in
+          Login
         </Button>
     );
   }
@@ -54,9 +66,7 @@ class LoginForm extends Component {
             <CardSection>
               <Input placeholder={"******"} value={this.props.password} label={"password"} secureTextEntry={true} onChangeText={this.onPasswordChange.bind(this)}style={styles.textStyle}/>
               </CardSection> 
-              <Text style = {styles.errorTextStyle}>
-                {this.state.error}
-              </Text>
+              {this.renderError()}
             <CardSection>
               {this.renderButton()}
             </CardSection>
@@ -76,11 +86,9 @@ const styles = {
   }
 }
 
-const mapStateToProps = state => {
-  return{
-    email: state.auth.email,
-    password: state.auth.password
-  };
+const mapStateToProps = ({auth}) => {
+  const { email, password, error, loading} = auth;
+  return{ email, password, error, loading };
 }
 export default connect(mapStateToProps,{ 
   emailChanged,

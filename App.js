@@ -7,6 +7,7 @@ import ReduxThunk from 'redux-thunk'; // middleware
 import reducers from './src/reducers';
 import {Header, Button, CardSection, Card, Spinner} from './src/components/common';
 import LoginForm from './src/components/LoginForm';
+import Router from './Router';
 
 class App extends Component {
   componentWillMount() {
@@ -26,10 +27,7 @@ class App extends Component {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store = {store}>
-        <View style={ViewStyle}>
-          <Header headerText="Login Form"/>
-          <LoginForm/>
-        </View>
+          <Router />
       </Provider>
     );
   }
