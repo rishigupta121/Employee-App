@@ -4,6 +4,12 @@ import LoginForm from './src/components/LoginForm';
 import EmployeeList from './src/components/EmployeeList';
 import EmployeeCreate from './src/components/EmployeeCreate';
 import EmployeeEdit from './src/components/EmployeeEdit';
+import {
+    EMPLOYEE_UPDATE,
+    EMPLOYEE_CREATE,
+    EMPLOYEES_FETCH_SUCCESS,
+    EMPLOYEE_SAVE_SUCCESS
+} from './src/actions/types';
 
 const RouterComponent = () => {
     return (
@@ -15,7 +21,10 @@ const RouterComponent = () => {
                 <Scene key="main">
                 <Scene rightTitle="Add"
                 onRight = {
-                    () => Actions.employeeCreate()
+                    () => {
+                        //dispatch({ type : EMPLOYEE_CREATE});
+                        Actions.employeeCreate();
+                    }
                 }
                 key="employeeList" 
                 component={EmployeeList} 
